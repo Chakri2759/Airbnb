@@ -1,0 +1,120 @@
+<% layout('./layouts/boilerplate.ejs') -%>
+<script>
+    let mapToken = "<%= process.env.MAP_TOKEN %>";
+    console.log(mapToken);
+    const singleListing = JSON.parse('<%- JSON.stringify(singleListing) %>'); // Correctly parse the embedded JSON string
+    console.log("Parsed Single Listing:", singleListing);
+</script>
+
+    
+        
+        <div class="row mt-3">
+            <div class="col-8 offset-3">
+                <h3>
+                    <%=singleListing.title%>
+                </h3>
+
+            </div>
+
+            <div class="card col-6 offset-3 listing-card">
+
+                <img src="<%=singleListing.image.url%>" class="card-img-top show-img" alt="listing_img">
+                <br>
+                <div class="card-body">
+                    
+                    <p class="card-text"> Owned by <i><%=singleListing.owner.username%></i></p>
+                    <p class="card-text"><%=singleListing.description%></p>
+                    <p class="card-text"> &#8377;<%=singleListing.price.toLocaleString("en-IN")%></p>
+                    <p class="card-text"> <%=singleListing.location%></p>
+                    <p class="card-text"><%=singleListing.country%></p>
+                    <p class="card-text"><%=singleListing.category%></p>
+                </div>
+
+            </div>
+        </div>
+     
+        <% if(currUser && currUser.equals(singleListing.owner)){ %>
+        
+                <div class="btns">
+                <!-- edit -->
+                <a href="/listings/<%=singleListing._id%>/edit" class="btn btn-dark col-1 offset-3 add-btn">edit</a>
+            
+                <!-- delete -->
+                <form action="/listings/<%=singleListing._id%>?_method=delete" method="post">
+                    <button class="btn btn-dark offset-4">delete</button>
+                </form>
+            </div>
+            <% } %>
+           
+        
+        
+        <div class="col-8 offset-3">
+            <% if(currUser && !currUser.equals(singleListing.owner)) {%>
+             <hr/>
+            <h4>Leave a Review</h4>
+            <form action="/listings/<%= singleListing._id %>/reviews" method="post" novalidate class="needs-validation">
+                
+                
+                <fieldset class="starability-slot">
+                    <p>First rating:</p>
+                    <input type="radio" id="no-rate" class="input-no-rate" name="Review[rating]" value="0" checked aria-label="No rating." />
+                    <input type="radio" id="first-rate1" name="Review[rating]" value="1" />
+                    <label for="first-rate1" title="Terrible">1 star</label>
+                    <input type="radio" id="first-rate2"name="Review[rating]" value="2" />
+                    <label for="first-rate2" title="Not good">2 stars</label>
+                    <input type="radio" id="first-rate3" name="Review[rating]" value="3" />
+                    <label for="first-rate3" title="Average">3 stars</label>
+                    <input type="radio" id="first-rate4"name="Review[rating]" value="4" />
+                    <label for="first-rate4" title="Very good">4 stars</label>
+                    <input type="radio" id="first-rate5" name="Review[rating]" value="5" />
+                    <label for="first-rate5" title="Amazing">5 stars</label>
+                  </fieldset>
+                <div class="mb-3 mt-3">
+                    <label for="comment" class="form-label">Comment:</label>
+                    <textarea id="comment" name="Review[comment]" rows="5" cols="30" class="form-control"
+                        required></textarea>
+                    <div class="invalid-feedback">Please add some comments</div>
+                </div>
+
+                <button class="btn btn-outline-dark">Submit</button>
+                <br><br>
+            </form>
+
+   <% } %>
+        <% if(singleListing.reviews.length>0){%>
+            <div class="row ">
+               
+               <hr>
+                <h3>All Reviews</h3>
+
+                <% for(review of singleListing.reviews) { %>
+                    <div class="card col-5 ms-3 mb-3 p-3">
+                        <h6 class="card-body"><%=review.author.username%></h6>
+                        <p class="starability-result card-text" data-rating="<%=review.rating%>"> </p>
+                        <p class="card-text">
+                            <%=review.comment%>
+                        </p>
+                        
+                        <form method="post" action="/listings/<%= singleListing._id%>/reviews/<%=review._id%>?_method=DELETE">
+                            <button class="btn btn-sm btn-dark">Delete</button>
+                        </form>
+                    </div>
+
+                    <%}%>
+                
+            </div>
+            <%}%>
+        </div>
+        <div class="col-8 offset-3">
+            <hr>
+            <h3>Where you'll be</h3>
+            <div id="map">
+                
+            </div>
+            
+        </div>
+        <br><br>
+       <script src="/js/map.js"></script>
+    
+
+    </html>
