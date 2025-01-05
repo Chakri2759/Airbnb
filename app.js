@@ -95,9 +95,9 @@ app.use((req,res,next)=>{
 app.use("/listings",listingRoutes);
 app.use("/listings/:id/reviews",reviewRoutes);
 app.use("/",userRoutes);
-// app.get("/",(req,res)=>{
-//     res.send("root is working");
-// })
+app.get("/",(req,res)=>{
+    res.render("./listings/index.ejs");
+})
 
 app.get("/testListing",(req,res)=>{
     let samplelisting=new listing({
@@ -123,9 +123,9 @@ app.get("/category/:type",async(req,res)=>{
 
 
 //page not found
-// app.all("*",(req,res,next)=>{
-//     next(new ExpressError(404,"Page Not Found"));
-// })
+app.all("*",(req,res,next)=>{
+    next(new ExpressError(404,"Page Not Found"));
+})
 //Error handling middle ware
 app.use((err,req,res,next)=>{
     let{statusCode=500,message="something went wrong"}=err;
