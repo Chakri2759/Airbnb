@@ -1,149 +1,258 @@
 <% layout('./layouts/boilerplate.ejs') -%>
-    <style>
-            .filters{
-               display: flex;
-               flex-wrap: wrap;
-               align-items: center;
-            }
-            .filter{
-               text-align: center;
-               margin-top: 1.5rem;
-               margin-right: 2rem;
-               opacity: 0.7;
-               
-            }
-            .filter p{
-               font-size: 0.8rem;
-            }
+<style>
+   /* Default Styles (Large Screens: 3 cards per row) */
+  
+   .row {
+           display: grid;
+           grid-template-columns: repeat(3, 1fr);
+           gap: 1rem;
+           /* Space between cards */
+           /* padding: 2rem; */
+          justify-content: space-between;
+       }
+
+       .card {
+           width: 100%;
+           height: 19rem;
+           /* Fixed height */
+           display: flex;
+           flex-direction: column;
+           border: 1px solid #ddd;
+           border-radius: 8px;
+           /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+           overflow: hidden;
+           margin-bottom: 4rem;
+       }
+
+       .card  card-img-top {
+           width: 100%;
+           height: 15rem;
+           /* Adjust image height proportionally */
+           object-fit: cover;
+       }
+
+       .card-body {
+           margin-left:0px ;
+           flex-grow: 1;
+           /* text-align: center;   */
+       }
+
+       /* Medium Screens (2 cards per row) */
+      
+       @media (min-width : 643px )and (max-width: 958px) {
+           .row {
+               grid-template-columns: repeat(2, 1fr);
+               justify-content: center;
+           }
+           .card {
+               width: 20rem;
+               margin: 0 auto;
+           }
+       }
+       @media (min-width : 959px ) and (max-width: 1304px) {
+           .row {
+               grid-template-columns: repeat(3, 1fr);
+               justify-content: center;
+           }
+           .card {
+               width: 20rem;
+               margin: 0 auto;
+           }
+       }
+       @media (min-width: 1305px) {
+           .row {
+               grid-template-columns: repeat(4, 1fr);
+               justify-content: center;
+           }
+           .card {
+               height: 16rem;
+               width: 6rem;
+               margin: 0 auto;
+           }
+       }
+
+       /* Small Screens (1 card, 80% screen width) */
+       @media (max-width: 642px) {
+           .row {
+               grid-template-columns: 1fr;
+               /* Single column layout */
+               justify-content: center;
+               /* Center align card */
+           }
+
+           .card {
+               width: 90%;
+               margin: 0 auto;
+           }
+           .filters
+           {
+               margin: 1rem 3rem;
+           }
            
-            .filters a{
-               text-decoration: none;
-               color: black;
-               opacity: 0.7;
-            }
-            .filters a:hover{
-               opacity: 1;
-            }
-            .tax-info{
-               display: none;
-            }
-            .tax-toggle{
-               border: 1px solid black;
-               height: 2.5rem;
-               border-radius: 0.7rem;
-               padding: 1rem;
-               font-size: 0.8rem;
-               margin-left: 9rem;
-               display: flex;
-               align-items: center;
-               cursor: pointer;
-            }
-            .form-check-input{
-               cursor: pointer;
-            }
-            
-    </style>
+       }
+       
+   .filters {
+      display: flex;
+      /* flex-wrap: wrap; Allow filters to wrap to new lines on small screens */
+      gap: 1rem;
+      /* align-items: center; */
+      /* justify-content: flex-start; */
+      overflow-y: hidden;
+   }
+
+   .filter {
+      text-align: center;
+      margin-top: 1.5rem;
+      margin-right: 1rem;
+      opacity: 0.7;
+   }
+
+   .filter p {
+      font-size: 0.8rem;
+   }
+
+   .filters a {
+      text-decoration: none;
+      color: black;
+      opacity: 0.7;
+   }
+
+   .filters a:hover {
+      opacity: 1;
+   }
+
+   .tax-toggle {
+   border: 1px solid black;
+   height: 40px;
+   border-radius: 12px;
+   padding: 6px;
+   font-size: 10px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   cursor: pointer;
+   margin-top: 25px;
+   max-width: 300px; /* Ensure the toggle doesn't stretch too wide */
+}
+
+   .form-check-input {
+      cursor: pointer;
+      font-size: 10px;
+      margin-top: 5px;
+     
+   }
+   .form-switch label{
+               font-size: 12px;
+               width:125px
+           }
+   .para{
+      display: flex;
+     
+   }
    
-      <!-- <h2 class="mb-3 mt-3" style="margin-left: 1.8rem;">All Listings</h2> -->
-      <!-- <form action="listings/new" method="get">
-         <button>create new listing</button>
-      </form> -->
-      <div class="filters">
-         <a href="/category/Trending">        
-            <div class="filter">
+</style>
+
+
+  
+<div class="para">
+   <div class="filters">
+      <a href="/category/Trending">
+         <div class="filter">
             <div><i class="fa-solid fa-fire"></i></div>
             <p>Trending</p>
-            </div>
-         </a>
-         <a href="/category/Rooms">
-            <div class="filter">
-               <div><i class="fa-solid fa-bed"></i></div>
-               <p>Rooms</p>
-            </div>
-         </a>
-         <a href="/category/Iconic cities">
-            <div class="filter">
-               <div><i class="fa-solid fa-mountain-city"></i></div>
-               <p>Iconic cities</p>
-            </div>
-         </a>
-         <a href="/category/Mountains">
-            <div class="filter">
-               <div><i class="fa-solid fa-mountain"></i></div>
-               <p>Mountains</p>
-            </div>
-         </a>
-         <a href="/category/Castles">
-            <div class="filter">
-               <div><i class="fa-brands fa-fort-awesome"></i></div>
-               <p>Castles</p>
-            </div>
-         </a>
-         <a href="/category/Amazing pools">
-            <div class="filter">
-               <div><i class="fa-solid fa-bed"></i></div>
-               <p>Amazing pools</p>
-            </div>
-         </a>
-        <a href="/category/Camping">
+         </div>
+      </a>
+      <a href="/category/Rooms">
+         <div class="filter">
+            <div><i class="fa-solid fa-bed"></i></div>
+            <p>Rooms</p>
+         </div>
+      </a>
+      <a href="/category/Iconic cities">
+         <div class="filter">
+            <div><i class="fa-solid fa-mountain-city"></i></div>
+            <p>Iconic cities</p>
+         </div>
+      </a>
+      <a href="/category/Mountains">
+         <div class="filter">
+            <div><i class="fa-solid fa-mountain"></i></div>
+            <p>Mountains</p>
+         </div>
+      </a>
+      <a href="/category/Castles">
+         <div class="filter">
+            <div><i class="fa-brands fa-fort-awesome"></i></div>
+            <p>Castles</p>
+         </div>
+      </a>
+      <a href="/category/Amazing pools">
+         <div class="filter">
+            <div><i class="fa-solid fa-bed"></i></div>
+            <p>Amazing pools</p>
+         </div>
+      </a>
+      <a href="/category/Camping">
          <div class="filter">
             <div><i class="fa-solid fa-campground"></i></div>
             <p>Camping</p>
          </div>
-        </a>
-         <a href="/category/Farms">
-            <div class="filter">
-               <div><i class="fa-solid fa-cow"></i></div>
-               <p>Farms</p>
-            </div>
-         </a>
-        <a href="/category/Arctic">
+      </a>
+      <a href="/category/Farms">
+         <div class="filter">
+            <div><i class="fa-solid fa-cow"></i></div>
+            <p>Farms</p>
+         </div>
+      </a>
+      <a href="/category/Arctic">
          <div class="filter">
             <div><i class="fa-solid fa-snowflake"></i></div>
             <p>Arctic</p>
          </div>
-        </a>
-      <div class="tax-toggle">
-         <div class="form-check-reverse form-switch">
-            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-            <label class="form-check-label" for="flexSwitchCheckDefault">Display total with tax</label>
-         </div>
+      </a>
+
+   </div>
+   <div class="tax-toggle">
+      <div class="form-check-reverse form-switch">
+         <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+         <label class="form-check-label" for="flexSwitchCheckDefault">Display total with tax</label>
       </div>
-      </div>
-      <ul>
-         <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-2">
-            <% for(listing of allListings){%>
-             <a href="/listings/<%=listing._id%>" class="listing-link">
+   </div>
+</div>
+   <ul>
+      <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-2">
+         <% for(listing of allListings){%>
+            <a href="/listings/<%=listing._id%>" class="listing-link">
                <div class="card listing-card">
                   <img src="<%=listing.image.url %>" class="card-img-top" alt="listing  image">
                   <div class="card-img-overlay">abc</div>
                   <div class="card-body">
                      <p class="card-text">
-                       <b><%=listing.title %> <br></b>
+                        <b>
+                           <%=listing.title %> <br>
+                        </b>
                         &#8377; <%=listing.price.toLocaleString("en-IN")%> /night
-                        <i class="tax-info"> &nbsp; &nbsp; + 18% GST</i>
+                           <i class="tax-info"> &nbsp; &nbsp; + 18% GST</i>
                      </p>
                   </div>
                </div>
             </a>
-               <%}%>
-         </div>
-        
+            <%}%>
+      </div>
 
-      </ul>
-     <script>
-         let taxSwitch=document.getElementById("flexSwitchCheckDefault");
-         taxSwitch.addEventListener("click",()=>{
-           let taxInfo=document.getElementsByClassName("tax-info");
-            for(info of taxInfo)
-            {
-               if(info.style.display!="inline")
-               {
-                  info.style.display="inline";
-               }else{
-                  info.style.display="none";
-               }
-               
+
+   </ul>
+   <script>
+      let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+      taxSwitch.addEventListener("click", () => {
+         let taxInfo = document.getElementsByClassName("tax-info");
+         for (info of taxInfo) {
+            if (info.style.display != "inline") {
+               info.style.display = "inline";
+            } else {
+               info.style.display = "none";
             }
-         })
-     </script>
+
+         }
+      })
+   </script>

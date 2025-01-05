@@ -1,4 +1,11 @@
 <% layout('./layouts/boilerplate.ejs') -%>
+<style>
+    @media(max-width:576px){
+    .offset-3{
+        margin-left: 3%;
+    }
+}
+</style>
 <script>
     let mapToken = "<%= process.env.MAP_TOKEN %>";
     console.log(mapToken);

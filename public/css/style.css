@@ -1,6 +1,7 @@
 
 .navbar{
     height: 4.5rem;
+    background-color: white;
 }
 *{
     font-family: "Plus Jakarta Sans", sans-serif;
@@ -38,9 +39,6 @@ body{
     align-items: center;
     justify-content: center;
     justify-content: space-evenly;
-
-
-  
 }
 .f-socials i{
     font-size: 1.2rem;
@@ -53,7 +51,7 @@ body{
 }
 .card-img-top{
     border-radius: 0.6rem !important;
-    width: 100% !important;
+
     object-fit: cover !important;
 }
 .card-body{
@@ -68,7 +66,6 @@ body{
 /*card-styling*/
 .card-img-overlay{
     opacity: 0;
-   
  }
 .card-img-overlay:hover{
    opacity: 0.1;
@@ -76,7 +73,7 @@ body{
 }
 .card-img-top{
     height: 15rem !important;
-    width:22rem !important;
+    width:20rem !important;
 }
 /*new page*/
 .add-btn{
@@ -95,3 +92,14 @@ body{
     height: 400px;
     width: 80vh; 
       }
+      ol,ul{
+        padding-left: 0rem !important;
+      }
+
+@media (max-width:575px) {
+    #map{
+        width:21rem;
+        height: 12rem;
+    }
+    
+}
