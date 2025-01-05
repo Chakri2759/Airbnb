@@ -95,8 +95,10 @@ app.use((req,res,next)=>{
 app.use("/listings",listingRoutes);
 app.use("/listings/:id/reviews",reviewRoutes);
 app.use("/",userRoutes);
-app.get("/",(req,res)=>{
-    res.render("./listings/index.ejs");
+//home
+app.get("/",async(req,res)=>{
+    let allListings=await listing.find({});
+    res.render("./listings/index.ejs",{allListings});
 })
 
 app.get("/testListing",(req,res)=>{
