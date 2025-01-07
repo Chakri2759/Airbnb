@@ -11,7 +11,7 @@ module.exports.signup=async(req,res)=>{
     const registeredUser=await User.register(newUser,password);
     req.login(registeredUser, function(err) {
         if (err) { return next(err); }
-        req.flash("success","Welcome to Airbnb!");
+        req.flash("success","Welcome to HolidayHub");
         res.redirect("/listings");
       });
     console.log("new user registered");
@@ -28,7 +28,7 @@ module.exports.renderLogin=(req,res)=>{
 }
 //login
 module.exports.login= async(req,res)=>{
-    req.flash("success","Welcome back to Airbnb");
+    req.flash("success","Welcome back to HolidayHub");
     let redirectUrl=res.locals.redirectUrl||"/listings";
     res.redirect(redirectUrl);
 }
